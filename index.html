@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quendor | Esperanos Pronto</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Belleza&family=Manrope:wght@200..800&family=Monda:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="min-h-screen">
+    <main
+      class="flex min-h-screen flex-col items-center md:justify-center px-6 py-12 text-monda dark:bg-gray-900 dark:text-white"
+    >
+      <div class="">
+        <img src="./assets/main.png" class="md:w-[400px] dark:hidden" alt="" />
+        <img
+          src="./assets/dark_mode.png"
+          class="md:w-[400px] hidden dark:block"
+          alt=""
+        />
+      </div>
+      <section
+        class="w-full max-w-3xl rounded-3xl p-10 shadow-2xl backdrop-blur"
+      >
+        <p class="mb-4 text-sm uppercase tracking-[0.3em] text-manrope">
+          Launching Soon
+        </p>
+        <h1
+          class="text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl"
+        >
+          <span class="text-belleza">QUENDOR</span> is coming soon!
+        </h1>
+        <p class="mt-4 text-lg text-manrope">
+          Stay tuned—our next release drops when the timer hits zero.
+        </p>
+
+        <div
+          class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4"
+          aria-label="Countdown timer"
+        >
+          <div class="rounded-2xl p-6 text-center shadow-lg">
+            <div id="days" class="text-4xl font-bold tabular-nums sm:text-5xl">
+              00
+            </div>
+            <div
+              class="mt-2 text-sm uppercase tracking-wide text-manrope font-semibold"
+            >
+              Days
+            </div>
+          </div>
+          <div class="rounded-2xl p-6 text-center shadow-lg">
+            <div id="hours" class="text-4xl font-bold tabular-nums sm:text-5xl">
+              00
+            </div>
+            <div
+              class="mt-2 text-sm uppercase tracking-wide text-manrope font-semibold"
+            >
+              Hours
+            </div>
+          </div>
+          <div class="rounded-2xl p-6 text-center shadow-lg">
+            <div
+              id="minutes"
+              class="text-4xl font-bold tabular-nums sm:text-5xl"
+            >
+              00
+            </div>
+            <div
+              class="mt-2 text-sm uppercase tracking-wide text-manrope font-semibold"
+            >
+              Minutes
+            </div>
+          </div>
+          <div class="rounded-2xl p-6 text-center shadow-lg">
+            <div
+              id="seconds"
+              class="text-4xl font-bold tabular-nums sm:text-5xl"
+            >
+              00
+            </div>
+            <div
+              class="mt-2 text-sm uppercase tracking-wide text-manrope font-semibold"
+            >
+              Seconds
+            </div>
+          </div>
+        </div>
+
+        <p
+          id="complete"
+          class="mt-8 hidden rounded-xl bg-emerald-500/20 px-4 py-3 text-center text-base font-medium"
+        >
+          The wait is over—Quendor just went live.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const targetDate = new Date("2026-02-01T12:00:00");
+      const refs = {
+        days: document.getElementById("days"),
+        hours: document.getElementById("hours"),
+        minutes: document.getElementById("minutes"),
+        seconds: document.getElementById("seconds"),
+        complete: document.getElementById("complete"),
+      };
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate.getTime() - now.getTime();
+
+        if (diff <= 0) {
+          refs.days.textContent = "00";
+          refs.hours.textContent = "00";
+          refs.minutes.textContent = "00";
+          refs.seconds.textContent = "00";
+          refs.complete.classList.remove("hidden");
+          clearInterval(timerId);
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        refs.days.textContent = String(days).padStart(2, "0");
+        refs.hours.textContent = String(hours).padStart(2, "0");
+        refs.minutes.textContent = String(minutes).padStart(2, "0");
+        refs.seconds.textContent = String(seconds).padStart(2, "0");
+      }
+
+      const timerId = setInterval(updateCountdown, 1000);
+      updateCountdown();
+    </script>
+  </body>
+</html>
